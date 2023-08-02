@@ -53,8 +53,9 @@
   <input type="range" min="100" max="1000" v-model="imageSize">
   <br>
   {{ imageSize }}
-  <img src="" alt=""
+  <img :src="`${breakfastShop.resizeImg}&w=${imageSize}`" alt=""
   >
+  <br>
   {{ `${breakfastShop.resizeImg}&w=${imageSize}` }}
   
   <hr>
@@ -62,7 +63,8 @@
   <button type="button"
   v-on:click="dynamic = dynamic === 'disabled' ? 'readonly':'disabled'">切換為 {{ dynamic }}</button>
   <br>
-  <input type="text" :value="name">
+  {{dynamic}}
+  <input type="text" :[dynamic]  :value="name">
 
   <hr>
   <h3>預告：元件的資料傳遞亦是使用 v-bind</h3>
