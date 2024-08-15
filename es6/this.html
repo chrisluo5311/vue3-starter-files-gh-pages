@@ -7,67 +7,71 @@
 var a = '全域'
 function fn(params) {
   console.log(params, this, window, arguments);
-  debugger;
+  // debugger;
 }
+// fn(1,2,3);
 
 // #2 this 的指向為何
-// var obj = {
-//   name: '小明',
-//   fn: function(params) {
-//     console.log(params, this, window, arguments);
-//     // debugger;
-//   }
-// }
+var obj = {
+  name: '小明',
+  fn: function(params) {
+    console.log(params, this, window, arguments);
+    // debugger;
+  }
+}
+// obj.fn(1,2);
 
 // #3 注意：this 的指向相當複雜，大部分情境只需要了解其中一種即可(95%)
 // 傳統函式中的 this 只與調用方式有關
-// var someone = '全域';
-// function callSomeone() {
-//   console.log(this.someone);
-// }
-// callSomeone();
+var someone = '全域';
+function callSomeone() {
+  console.log(this.someone);
+}
+// callSomeone();//前面沒有就是simple call
 
 // #4 各種運用變化
-// var obj = {
-//   someone: '物件',
-//   callSomeone() {
-//     console.log(this.someone);
-//   }
-// }
-// obj.callSomeone();
+var obj = {
+  someone: '物件',
+  callSomeone() {
+    console.log(this.someone);
+  }
+}
+// obj.callSomeone();//this指向：看前面的物件
 
-// var obj2 = {
-//   someone: '物件2',
-//   callSomeone
-// }
+var obj2 = {
+  someone: '物件2',
+  callSomeone
+}
 // obj2.callSomeone();
 
-// var wrapObj = {
-//   someone: '外層物件',
-//   callSomeone,
-//   innerObj: {
-//     someone: '內層物件',
-//     callSomeone,
-//   }
-// }
+var wrapObj = {
+  someone: '外層物件',
+  callSomeone,
+  innerObj: {
+    someone: '內層物件',
+    callSomeone,
+  }
+}
+// wrapObj.callSomeone();
 // wrapObj.innerObj.callSomeone();
 
-// var obj3 = {
-//   someone: '物件 3',
-//   fn() {
-//     callSomeone(); // 通常平常不會這樣去取用 this
-//   }
-// }
+var obj3 = {
+  someone: '物件 3',
+  fn() {
+    callSomeone(); // 通常平常不會這樣去取用 this
+  }
+}
 // obj3.fn();
 
-// var obj4 = {
-//   someone: '物件 4',
-//   fn() {
-//     setTimeout(function () {
-//       console.log(this.someone);
-//     });
-//   }
-// }
+var obj4 = {
+  someone: '物件 4',
+  fn() {
+    //callback function 大都指向全域
+    setTimeout(function () {
+      console.log(this.someone);
+    });
+  }
+}
 // obj4.fn();
 
 </script>
