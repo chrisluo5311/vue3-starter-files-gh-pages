@@ -14,7 +14,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr></tr>
+      <!-- key唯一值 -->
+      <tr v-for="item in products" :key="item.id" v-bind:class="{'table-success':item.onStock}">
+        <td>{{item.name}}</td>
+        <td>
+          <img :src="item.imageUrl" alt="">
+        </td>
+        <td>
+          <input type="checkbox" v-model="item.onStock">
+        </td>
+        <td>
+          <button type="button" class="btn btn-outline-secondary" v-on:click="editItem(item)">編輯</button>
+        </td>
+      </tr>
     </tbody>
   </table>
   <form>
@@ -63,11 +75,25 @@ const App = {
     }
   },
   methods: {
+    editItem(item1) {
+      this.temp = {...item1};
+    },
     confirmEdit() {
-      this.temp.id = new Date().getTime();
-      this.temp.onStock = false;
-      this.products.push(this.temp);
-      this.temp = {};
+      if (!this.temp.id) {
+        //新增資料
+        this.temp.id = new Date().getTime();
+        this.temp.onStock = false;
+        this.products.push(this.temp);
+        this.temp = {};
+      } else {
+        this.products.forEach((item,i)=> {
+          if (item.id === this.temp.id) {
+            this.products[i] = this.temp;
+          }
+        });
+        this.temp = {};
+      }
+
     }
   },
   created() {
