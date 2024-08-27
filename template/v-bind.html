@@ -6,10 +6,10 @@
 <div id="app">
   <h3>綁定屬性 v-bind</h3>
   <p>{{ breakfastShop.name }}</p>
-  <img :src="breakfastShop.imgUrl" class="square-img" alt="" :title="breakfastShop.name">
+  <img v-bind:src="breakfastShop.imgUrl" class="square-img" alt="" v-bind:title="breakfastShop.name">
 
   <h3>縮寫形式 <code>:</code></h3>
-  <img class="square-img" alt="" :src="breakfastShop.imgUrl">
+  <img :src="breakfastShop.imgUrl" class="square-img" alt="" :title="breakfastShop.name">
 
   <hr>
   <h3>更多屬性綁定</h3>
