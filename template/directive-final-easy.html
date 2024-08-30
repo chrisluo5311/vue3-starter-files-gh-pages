@@ -8,62 +8,55 @@
     <div class="row gx-3 bg-light py-3">
       <div class="col-md-4">
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action">
-            <h6 class="card-title mb-1">珍珠鮮奶茶</h6>
+          <a href="#" class="list-group-item list-group-item-action" v-for="item in products" :key="item.name" @click.prevent="selectProduct(item)" :class="{'active': itemSelected.name === item.name}">
+            <h6 class="card-title mb-1">{{item.name}}</h6>
             <div class="d-flex align-items-center justify-content-between">
-              <p class="mb-0"><small>Pearl Milk Tea</small></p>
-              <p class="mb-0"><small>NT$ 60</small></p>
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action active">
-            <h6 class="card-title mb-1">鮮奶茶</h6>
-            <div class="d-flex align-items-center justify-content-between">
-              <p class="mb-0"><small>Milk Tea</small></p>
-              <p class="mb-0"><small>NT$ 40</small></p>
+              <p class="mb-0"><small>{{item.engName}}</small></p>
+              <p class="mb-0"><small>NT$ {{item.price}}</small></p>
             </div>
           </a>
         </div>
       </div>
       <div class="col-md-8">
         <div class="card mb-2">
-          <!-- <div class="position-absolute text-white d-flex align-items-center justify-content-center active" style="top: 0;bottom: 0;left: 0;right: 0;background-color: rgba(0, 0, 0, 0.65); z-index: 100;">請先選擇飲品</div> -->
+          <div v-if="!itemSelected.name" class="position-absolute text-white d-flex align-items-center justify-content-center active" style="top: 0;bottom: 0;left: 0;right: 0;background-color: rgba(0, 0, 0, 0.65); z-index: 100;">請先選擇飲品</div>
           <div class="card-body px-4">
             <div class="mb-3">
               <label for="productNum" class="form-label">數量</label>
-              <input type="number" class="form-control" id="productNum" placeholder="數量" min="0">
+              <input type="number" class="form-control" id="productNum" placeholder="數量" min="0" v-model="itemSelected.count">
             </div>
             <div class="mb-3">
               <label for="productNum" class="form-label d-block">冰塊*</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" name="iceType" type="radio" id="正常冰">
-                <label class="form-check-label" for="正常冰">正常冰</label>
+              <div class="form-check form-check-inline" v-for="(ice,key) in iceType" :key="'ice'+ key">
+                <input class="form-check-input" name="iceType" type="radio" :id="'ice'+ key" :value="ice" v-model="itemSelected.ice">
+                <label class="form-check-label" :for="'ice'+ key">{{ice}}</label>
               </div>
             </div>
             <div class="mb-3">
               <label for="productNum" class="form-label d-block">甜度*</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" name="sugarType" type="radio" id="全糖">
-                <label class="form-check-label" for="全糖">全糖</label>
+              <div class="form-check form-check-inline" v-for="(sugar,key) in sugarType" :key="'sugar'+ key">
+                <input class="form-check-input" name="sugarType" type="radio" :id="'sugar'+ key" :value="sugar" v-model="itemSelected.sugar">
+                <label class="form-check-label" :for="'sugar'+ key">{{sugar}}</label>
               </div>
             </div>
             <div class="mb-3">
               <label for="productNum" class="form-label d-block">加料</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="椰果">
-                <label class="form-check-label" for="椰果">椰果</label>
+              <div class="form-check form-check-inline" v-for="(topping,key) in toppingsType" :key="'topping'+ key">
+                <input class="form-check-input" type="checkbox" :id="'topping'+ key" :value="topping" v-model="itemSelected.toppings">
+                <label class="form-check-label" :for="'topping'+ key">{{topping}}</label>
               </div>
             </div>
             <div class="mb-3">
               <label for="productNotice" class="form-label">備註</label>
-              <textarea class="form-control" id="productNotice" rows="2"></textarea>
+              <textarea class="form-control" id="productNotice" rows="2"  v-model="itemSelected.notes"></textarea>
             </div>
             <div class="d-flex gap-2">
-              <button class="btn btn-outline-primary w-100" type="button">取消</button>
-              <button class="btn btn-primary w-100" type="button">加入</button>
+              <button class="btn btn-outline-primary w-100" type="button" @click="resetOrder">取消</button>
+              <button class="btn btn-primary w-100" type="button" :disabled="!itemSelected.name" @click="addToOrder(itemSelected)">加入</button>
             </div>
           </div>
         </div>
-        <div class="card">
+        <div class="card" v-if="orderList.length > 0">
           <div class="card-body">
             <table class="table">
               <thead>
@@ -78,21 +71,21 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">珍珠鮮奶茶<br>
-                    <small class="text-muted fw-normal">備註：阿姨，我不想努力了</small>
+                <tr v-for="(item,key) in orderList" :key="'order'+ key">
+                  <th scope="row">{{item.name}}<br>
+                    <small class="text-muted fw-normal">備註：{{item.notes}}</small>
                   </th>
-                  <td>正常冰</td>
-                  <td>全糖</td>
-                  <td>椰果</td>
-                  <td>70</td>
-                  <td>1</td>
-                  <td class="text-end">70</td>
+                  <td>{{item.ice}}</td>
+                  <td>{{item.sugar}}</td>
+                  <td>{{ item.toppings.join(',') }}</td>
+                  <td>{{item.price + item.toppings.length * 10}}</td>
+                  <td>{{item.count}}</td>
+                  <td class="text-end">{{item.total}}</td>
                 </tr>
               </tbody>
             </table>
-            <p class="text-end">共 NT$ 70 元</p>
-            <button class="btn btn-sm btn-secondary w-100">重新選擇</button>
+            <p class="text-end">共 NT$ {{orderTotal}} 元</p>
+            <button class="btn btn-sm btn-secondary w-100" @click="chooseAgain">重新選擇</button>
           </div>
         </div>
       </div>
@@ -104,6 +97,11 @@
 const App = {
   data() {
     return {
+      itemSelected: {
+
+      },
+      orderList:[],
+      orderTotal: 0,
       iceType: ['正常冰', '少冰', '微冰', '去冰', '熱'],
       sugarType: ['全糖', '七分', '半糖', '三分', '無糖'],
       toppingsType: ['珍珠', '粉條', '小粉圓', '椰果', '芋頭'],
@@ -162,7 +160,39 @@ const App = {
     }
   },
   methods: {
-    
+    selectProduct(product) {
+      this.itemSelected = {
+        ...product,
+        toppings: [],
+        ice: '正常冰',
+        sugar:'全糖',
+        notes:'',
+        count: 1,
+      };
+    },
+    countTotal() {
+      this.orderTotal = 0;
+      this.orderList.forEach(item => {
+        this.orderTotal += item.total;
+      });
+    },
+    resetOrder() {
+      this.itemSelected = {};
+    },
+    addToOrder(product) {
+      const order = {
+        ...product,
+        total: (product.price + product.toppings.length * 10) * product.count,
+      }
+      this.orderList.push(order);
+      this.countTotal();
+      this.resetOrder();
+    },
+    chooseAgain() {
+      this.resetOrder();
+      this.orderList = [];
+      this.orderTotal = 0;
+    }
   },
 };
 
