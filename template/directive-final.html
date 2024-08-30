@@ -45,7 +45,7 @@
             </div>
             <div class="mb-3" >
               <label for="productNum" class="form-label d-block">加料</label>
-              <div class="form-check form-check-inline" v-for="(topping,key) in toppingsType" :key="'topping' + key" :disabled="!itemSelected.hasOwnProperty('defaults') || itemSelected.defaults.toppings.includes(topping)">
+              <div class="form-check form-check-inline" v-for="(topping,key) in toppingsType" :key="'topping' + key">
                 <input class="form-check-input" type="checkbox" :id="'topping' + key" :value="topping" v-model="itemSelected.toppingsChecked" :disabled="!itemSelected.hasOwnProperty('defaults') || itemSelected.defaults.toppings.includes(topping)">
                 <label class="form-check-label" :for="'topping' + key">{{topping}}</label>
               </div>
@@ -77,7 +77,7 @@
               <tbody>
                 <tr v-for="(item,key) in orderList" :key="'order'+key">
                   <th scope="row">{{item.name}}<br>
-                    <small class="text-muted fw-normal">備註：{{item.notes}}</small>
+                    <small class="text-muted fw-normal" v-if="item.notes !== ''">備註：{{item.notes}}</small>
                   </th>
                   <td>{{item.ice}}</td>
                   <td>{{item.sugar}}</td>
@@ -113,7 +113,7 @@
         <tbody>
           <tr v-for="(order,key) in finalOrder.finalOrderList" :key="'finalOrder'+key">
             <th scope="row">{{order.name}}<br>
-              <small class="text-muted fw-normal">備註：{{order.notes}}</small>
+              <small class="text-muted fw-normal" v-if="order.notes !== ''">備註：{{order.notes}}</small>
             </th>
             <td>{{order.ice}}</td>
             <td>{{order.sugar}}</td>
