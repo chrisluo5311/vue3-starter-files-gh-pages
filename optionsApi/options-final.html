@@ -12,7 +12,7 @@
       </div>
       <div class="list-group option" >
         <label class="list-group-item" v-for="(place,key) in filterProducts" :key="'place'+key">
-          <input class="form-check-input me-1" type="radio" name="area" @click="cacheArea = place" :checked="cacheArea.Name === place.Name">
+          <input class="form-check-input me-1" type="radio" name="area" :value="place" @click="cacheArea = place" :checked="cacheArea.Name === place.Name">
           {{ place.Name }}
         </label>
       </div>
@@ -41,8 +41,6 @@
 </div>
 
 <script>
-
-
 const App = {
   data() {
     return {
@@ -64,7 +62,8 @@ const App = {
       if (this.browseLog.length < 10){
         this.browseLog.push(this.cacheArea);
       } else {
-        this.browseLog[9] = this.cacheArea;
+        this.browseLog.shift();
+        this.browseLog.push(this.cacheArea);
       }
     },
   },
