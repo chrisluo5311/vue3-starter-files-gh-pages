@@ -94,7 +94,7 @@ const App = {
         console.log(n,o);
         this.result4 = `媽媽買了 ${this.product.name}，總共花費 ${this.product.price} 元，另外這 ${this.product.vegan? '是' : '不是'} 素食的`
       },
-      deep: true,
+      deep: true,//定義是不是深層監聽
     },
     //第一次執行時，不會顯示，因為沒有變動就不會觸發
     productName(){
