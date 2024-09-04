@@ -13,7 +13,7 @@
       <div class="list-group option">
         <label v-for="(item, keys) in filterSearch" class="list-group-item" :key="keys + 'filter'">
           <input @click="cacheArea = item" class="form-check-input me-1" type="radio" :value="item"
-                 name="area" :checked="cacheArea.Name === item.Name">
+                name="area" :checked="cacheArea.Name === item.Name">
           {{ item.Name }}
         </label>
       </div>
