@@ -9,6 +9,7 @@
   <card>
     <template v-slot:default="slotProps">
       我想取出元件的值來使用
+      <!-- slotProps是帶多個值 -->
       <!-- {{slotProps}} -->
       {{ slotProps.product.name }}
     </template>
@@ -32,7 +33,7 @@
     data() {
       return {
         product: {
-          name: '蛋餅',
+          name: '蛋餅meow',
           price: 30,
           vegan: false
         }
@@ -58,7 +59,7 @@
   });
 
   app.component('card2', {
-    props: ['product'],
+    props: ['product'], // 接收外部傳入的product值
     data() {
       return {
         veganName: ''

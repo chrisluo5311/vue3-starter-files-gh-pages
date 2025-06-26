@@ -22,6 +22,7 @@
     },
     methods: {
       addNum(num) {
+        console.log('addNum', num);
         this.num = this.num + num;
       },
     }
@@ -30,7 +31,7 @@
   app.component('button-counter', {
     data() {
       return {
-        num: 1,
+        num: 0,
       }
     },
     emits: ['add'],
