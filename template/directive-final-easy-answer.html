@@ -165,7 +165,7 @@ const App = {
     countTotal() { // 計算總價
       this.orderTotal = 0;
       this.orderList.forEach((item) => {
-        this.orderTotal = item.price;
+        this.orderTotal += item.price;
       });
     },
     selectedProduct(product) { // 選擇飲品

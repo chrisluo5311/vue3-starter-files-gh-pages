@@ -42,16 +42,16 @@
     <tbody>
       <template v-for="(item,i) in products" v-bind:key="item.name">
         <tr >
-          <th rowspan="2">{{i+1}}</th>
+          <th rowspan="2">{{i+1}}</th> <!-- 跨兩行的序號欄位 -->
           <td colspan="2">
             {{item.name}}
-          </td>
+          </td> <!-- 跨兩欄的商品名稱 -->
         </tr>
         <tr>
-          <td>
+          <td> <!-- 價格欄位 -->
             {{item.price}}元
-          </td>
-          <td>
+          </td> 
+          <td> <!-- 素食判斷欄位 -->
             <!-- 三元運算子 -->
             {{item.vegan ? '素食':'不可素食'}}
           </td>

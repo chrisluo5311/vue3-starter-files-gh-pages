@@ -29,7 +29,7 @@
   <div class="form-check">
     <input type="checkbox" 
     v-model="checkAnswer2"
-    true-value="吃飽了"
+    true-value="吃飽了666"
     false-value="還沒"
     class="form-check-input" id="check2" >
     <label class="form-check-label" for="check2">小明回覆</label>
@@ -38,7 +38,7 @@
   <hr>
   <h3>checkbox 複選框</h3>
   <p>你還要吃什麼？</p>
-  <p>{{ checkAnswer3.join(' ') }}</p>
+  <p>{{ checkAnswer3.join(',') }}</p>
   <div class="form-check">
     <input type="checkbox" class="form-check-input" id="check3" v-model="checkAnswer3" value="蛋餅" >
     <label class="form-check-label" for="check3">蛋餅</label>
