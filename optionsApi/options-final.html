@@ -62,7 +62,7 @@ const App = {
       if (this.browseLog.length < 10){
         this.browseLog.push(this.cacheArea);
       } else {
-        this.browseLog.shift();
+        this.browseLog.shift(); // remove last one
         this.browseLog.push(this.cacheArea);
       }
     },

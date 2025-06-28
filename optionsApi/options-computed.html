@@ -74,6 +74,8 @@ const App = {
         this.carts.forEach(item => {
           total += item.price;
         });
+        console.log("get total:",total);
+        console.log("get sum:",this.sum);
         return this.sum || total;
       },
       set(val) {
